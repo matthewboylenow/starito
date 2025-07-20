@@ -1,0 +1,12 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/api/get-kids/route": "app/api/get-kids/route.js",
+  "/api/login-child/route": "app/api/login-child/route.js",
+  "/api/get-rewards/route": "app/api/get-rewards/route.js",
+  "/api/get-stars/route": "app/api/get-stars/route.js",
+  "/api/get-daily-tasks/route": "app/api/get-daily-tasks/route.js",
+  "/page": "app/page.js",
+  "/kid/page": "app/kid/page.js",
+  "/login/page": "app/login/page.js",
+  "/parent/page": "app/parent/page.js"
+}

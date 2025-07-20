@@ -1,0 +1,21 @@
+{
+  "name": "Starito - Gamified Rewards for Kids",
+  "short_name": "Starito",
+  "description": "A fun reward system to encourage positive behaviors",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F9FAFB",
+  "theme_color": "#4A90E2",
+  "orientation": "portrait",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/icons/icon-placeholder.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable any"
+    }
+  ],
+  "categories": ["education", "kids", "productivity"],
+  "lang": "en-US"
+}

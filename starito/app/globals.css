@@ -1,0 +1,85 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  * {
+    @apply border-gray-200;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary-500 text-white font-semibold py-3 px-6 rounded-xl hover:bg-primary-600 transition-all duration-200 transform hover:scale-105 active:scale-95;
+  }
+  
+  .btn-secondary {
+    @apply bg-gray-200 text-gray-800 font-semibold py-3 px-6 rounded-xl hover:bg-gray-300 transition-all duration-200;
+  }
+  
+  .card {
+    @apply bg-white rounded-2xl shadow-card p-6 hover:shadow-card-hover transition-shadow duration-200;
+  }
+  
+  .star-icon {
+    @apply text-accent-yellow text-2xl;
+  }
+  
+  .pin-input {
+    @apply w-12 h-12 text-center text-2xl font-bold border-2 border-gray-300 rounded-xl focus:border-primary-500 focus:outline-none transition-colors;
+  }
+  
+  .task-card {
+    @apply card hover:bg-gray-50 cursor-pointer transition-all duration-200 border-l-4 border-transparent hover:border-primary-500;
+  }
+  
+  .task-card.completed {
+    @apply bg-success-50 border-l-success-500;
+  }
+  
+  .reward-badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium;
+  }
+  
+  .reward-badge.available {
+    @apply bg-accent-yellow/20 text-yellow-800;
+  }
+  
+  .reward-badge.redeemed {
+    @apply bg-gray-200 text-gray-600;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .touch-manipulation {
+    touch-action: manipulation;
+  }
+  
+  .animate-slide-in {
+    animation: slideIn 0.3s ease-out;
+  }
+  
+  @keyframes slideIn {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+}

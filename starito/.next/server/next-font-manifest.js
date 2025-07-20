@@ -1,0 +1,1 @@
+self.__NEXT_FONT_MANIFEST="{\"pages\":{},\"app\":{\"/workspaces/starito/starito/app/layout\":[\"static/media/9d5a263311222317-s.p.woff2\",\"static/media/c90a9e82ec3f8868-s.p.woff2\"]},\"appUsingSizeAdjust\":true,\"pagesUsingSizeAdjust\":false}"
