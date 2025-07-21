@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
 
     const tasksWithChores = tasks.map(task => {
       // The chore title comes from "Title (from Chore)" field which is an array
-      const choreTitleField = task['Title (from Chore)'] || task.Chore
+      const choreTitleField = (task as any)['Title (from Chore)'] || task.Chore
       console.log('🔍 Raw chore title field from Airtable:', choreTitleField, typeof choreTitleField)
       const choreTitle = choreTitleField && choreTitleField.length > 0 ? choreTitleField[0] : null
       console.log('🔍 Extracted choreTitle:', choreTitle)

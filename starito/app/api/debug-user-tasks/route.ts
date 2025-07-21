@@ -55,7 +55,7 @@ export async function GET(request: NextRequest) {
     console.log('📅 All unique dates in DailyTasks table:', uniqueDates)
     
     // Show tasks for today specifically - try both date formats
-    const todayTasksISO = allTasksData.records.filter(record => 
+    const todayTasksISO = allTasksData.records.filter((record: any) => 
       record.fields.Date === date
     )
     console.log(`📅 Tasks for ${date} (ISO format):`, todayTasksISO.length)
@@ -63,7 +63,7 @@ export async function GET(request: NextRequest) {
     // Convert to M/D/YYYY format and try again
     const [year, month, day] = date.split('-')
     const formattedDate = `${parseInt(month)}/${parseInt(day)}/${year}`
-    const todayTasksFormatted = allTasksData.records.filter(record => 
+    const todayTasksFormatted = allTasksData.records.filter((record: any) => 
       record.fields.Date === formattedDate
     )
     console.log(`📅 Tasks for ${formattedDate} (M/D/YYYY format):`, todayTasksFormatted.length)
@@ -71,7 +71,7 @@ export async function GET(request: NextRequest) {
     const todayTasks = todayTasksFormatted.length > 0 ? todayTasksFormatted : todayTasksISO
     
     // Show detailed task info
-    todayTasks.forEach(task => {
+    todayTasks.forEach((task: any) => {
       console.log('📝 Task detail:', {
         id: task.id,
         user: task.fields.User,
@@ -85,7 +85,7 @@ export async function GET(request: NextRequest) {
     // If we have a target user, show their specific tasks
     let userSpecificTasks = []
     if (targetUser) {
-      userSpecificTasks = todayTasks.filter(task => 
+      userSpecificTasks = todayTasks.filter((task: any) => 
         task.fields.User && task.fields.User.includes(targetUser.Name)
       )
       console.log(`🎯 Tasks specifically for ${targetUser.Name}:`, userSpecificTasks.length)
@@ -93,7 +93,7 @@ export async function GET(request: NextRequest) {
 
     // Get all chores for reference
     const allChoresData = await airtableRequest('Chores')
-    console.log('🧹 All chores:', allChoresData.records.map(c => ({
+    console.log('🧹 All chores:', allChoresData.records.map((c: any) => ({
       title: c.fields.Title,
       active: c.fields.Active,
       stars: c.fields.Stars
@@ -107,7 +107,7 @@ export async function GET(request: NextRequest) {
         targetUser,
         allTasksCount: allTasksData.records.length,
         todayTasksCount: todayTasks.length,
-        todayTasks: todayTasks.map(task => ({
+        todayTasks: todayTasks.map((task: any) => ({
           id: task.id,
           user: task.fields.User,
           chore: task.fields.Chore,
@@ -115,7 +115,7 @@ export async function GET(request: NextRequest) {
           completed: task.fields.Completed,
           approved: task.fields.Approved
         })),
-        userSpecificTasks: userSpecificTasks.map(task => ({
+        userSpecificTasks: userSpecificTasks.map((task: any) => ({
           id: task.id,
           user: task.fields.User,
           chore: task.fields.Chore,
@@ -123,7 +123,7 @@ export async function GET(request: NextRequest) {
           completed: task.fields.Completed,
           approved: task.fields.Approved
         })),
-        allChores: allChoresData.records.map(c => ({
+        allChores: allChoresData.records.map((c: any) => ({
           title: c.fields.Title,
           active: c.fields.Active,
           stars: c.fields.Stars
@@ -133,7 +133,7 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error('❌ Debug endpoint error:', error)
     return NextResponse.json(
-      { error: 'Debug failed', details: error.message },
+      { error: 'Debug failed', details: error instanceof Error ? error.message : String(error) },
       { status: 500 }
     )
   }
