@@ -51,7 +51,7 @@ export async function GET(request: NextRequest) {
     console.log('📋 ALL DailyTasks in Airtable:', allTasksData.records.length)
     
     // Show all unique date formats in the table
-    const uniqueDates = [...new Set(allTasksData.records.map(r => r.fields.Date).filter(Boolean))]
+    const uniqueDates = [...new Set(allTasksData.records.map((r: any) => r.fields.Date).filter(Boolean))]
     console.log('📅 All unique dates in DailyTasks table:', uniqueDates)
     
     // Show tasks for today specifically - try both date formats
