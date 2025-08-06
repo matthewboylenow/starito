@@ -6,32 +6,38 @@ const config: Config = {
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
         primary: {
-          50: '#EEF2FF',
-          100: '#E0E7FF',
-          500: '#6366F1',
-          600: '#5B52FF',
-          700: '#4F46E5',
-          900: '#312E81',
+          50: '#EBF3FE',
+          100: '#D7E7FD', 
+          DEFAULT: '#4A90E2', // Main brand blue from README
+          500: '#4A90E2',
+          600: '#3A7BC8', // Darker for hover states
+          700: '#2A66AE',
+          800: '#1A5194',
+          900: '#0A3C7A',
         },
         accent: {
-          yellow: '#FCD34D',
+          yellow: '#FFD166', // Gold from README
+          pink: '#EF476F',   // Red-pink from README
           orange: '#FB923C',
-          pink: '#EC4899',
           purple: '#A855F7',
         },
         success: {
           50: '#ECFDF5',
-          500: '#10B981',
+          DEFAULT: '#06D6A0', // Light green from README
+          500: '#06D6A0',
           600: '#059669',
         },
         background: {
           DEFAULT: '#FAFAFF',
           secondary: '#F8FAFF',
           gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          dark: '#0F172A',
+          'dark-secondary': '#1E293B',
         },
         text: '#1E1E1E',
         gray: {

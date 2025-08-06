@@ -17,5 +17,7 @@
     }
   ],
   "categories": ["education", "kids", "productivity"],
-  "lang": "en-US"
+  "lang": "en-US",
+  "permissions": ["notifications"],
+  "gcm_sender_id": "103953800507"
 }

@@ -86,6 +86,40 @@ The app is optimized for iPad use and can be installed as a PWA:
 | `npm run start` | Start production server |
 | `npm run lint` | Run ESLint |
 
+## 🕒 Automated Maintenance
+
+The app includes several maintenance endpoints for automated task management:
+
+### Daily Cron Job
+Set up a daily cron job to call the maintenance endpoint:
+
+```bash
+# Add to your crontab (runs at 6:00 AM daily)
+0 6 * * * curl -X POST https://yourdomain.com/api/cron/daily-maintenance
+```
+
+This endpoint automatically:
+- Creates new daily tasks for all children
+- Creates weekly tasks on Sundays
+- Cleans up completed tasks from the previous day
+
+### Manual Maintenance Endpoints
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/reset-daily-tasks` | POST | Create daily tasks for today |
+| `/api/reset-weekly-tasks` | POST | Create weekly tasks (Sundays only) |
+| `/api/cleanup-completed-tasks` | POST | Remove completed tasks |
+| `/api/parent/clear-completed` | POST | Parent admin clear completed |
+| `/api/cron/daily-maintenance` | POST | Run all maintenance tasks |
+
+### Task Lifecycle
+1. **Daily Reset**: New tasks created each morning
+2. **Task Completion**: Kids mark tasks as done
+3. **Parent Approval**: Parents approve completed tasks
+4. **Star Awards**: Stars automatically added to transactions
+5. **Daily Cleanup**: Completed tasks removed next day
+
 ## 📄 License
 
 Built with ❤️ for families everywhere.

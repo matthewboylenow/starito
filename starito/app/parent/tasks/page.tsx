@@ -19,6 +19,7 @@ export default function ManageTasksPage() {
   const [selectedUser, setSelectedUser] = useState<string>('')
   const [selectedDate, setSelectedDate] = useState<string>(new Date().toISOString().split('T')[0])
   const [assigning, setAssigning] = useState(false)
+  const [clearing, setClearing] = useState(false)
 
   useEffect(() => {
     if (!isAuthenticated || userType !== 'parent') {
@@ -122,6 +123,41 @@ export default function ManageTasksPage() {
     } catch (err) {
       console.error('Failed to delete task:', err)
       error('Failed to delete task. Please try again.')
+    }
+  }
+
+  const handleClearCompleted = async () => {
+    const completedCount = dailyTasks.filter(task => task.status === 'approved').length
+    
+    if (completedCount === 0) {
+      error('No completed tasks found to clear')
+      return
+    }
+    
+    if (!confirm(`Clear ${completedCount} completed tasks for ${new Date(selectedDate).toLocaleDateString()}?`)) {
+      return
+    }
+
+    setClearing(true)
+    try {
+      const response = await fetch('/api/parent/clear-completed', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ date: selectedDate })
+      })
+
+      if (response.ok) {
+        const data = await response.json()
+        success(`🧹 ${data.tasksCleared} completed tasks cleared!`)
+        loadData()
+      } else {
+        error('Failed to clear completed tasks. Please try again.')
+      }
+    } catch (err) {
+      console.error('Failed to clear completed tasks:', err)
+      error('Failed to clear completed tasks. Please try again.')
+    } finally {
+      setClearing(false)
     }
   }
 
@@ -306,9 +342,22 @@ export default function ManageTasksPage() {
         </section>
 
         <section>
-          <h2 className="font-heading text-xl font-bold text-gray-800 mb-4">
-            📅 Assigned Tasks for {new Date(selectedDate).toLocaleDateString()}
-          </h2>
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="font-heading text-xl font-bold text-gray-800">
+              📅 Assigned Tasks for {new Date(selectedDate).toLocaleDateString()}
+            </h2>
+            <button
+              onClick={handleClearCompleted}
+              disabled={clearing || dailyTasks.filter(task => task.status === 'approved').length === 0}
+              className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
+                clearing || dailyTasks.filter(task => task.status === 'approved').length === 0
+                  ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                  : 'bg-red-500 text-white hover:bg-red-600'
+              }`}
+            >
+              {clearing ? 'Clearing...' : '🧹 Clear Completed'}
+            </button>
+          </div>
           
           {dailyTasks.length === 0 ? (
             <div className="card text-center py-8">

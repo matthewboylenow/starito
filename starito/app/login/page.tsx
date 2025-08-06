@@ -146,17 +146,21 @@ export default function LoginPage() {
             <button
               onClick={fetchKids}
               disabled={loadingKids}
-              className="w-full py-6 bg-blue-600 text-white rounded-2xl font-heading text-xl font-semibold transition-all duration-200 transform hover:scale-105 active:scale-95 touch-manipulation disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn-primary w-full py-6 text-xl focus:ring-4 focus:ring-primary/30 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              aria-describedby="kid-login-desc"
             >
               {loadingKids ? '⏳ Loading...' : '👦 I\'m a Kid'}
             </button>
+            <p id="kid-login-desc" className="sr-only">Login as a child using PIN authentication</p>
             
             <button
               onClick={() => setLoginMode('parent')}
-              className="w-full py-4 bg-gray-200 text-gray-800 rounded-2xl font-semibold hover:bg-gray-300 transition-all duration-200 touch-manipulation"
+              className="btn-secondary w-full py-4 focus:ring-4 focus:ring-gray-300 focus:ring-offset-2"
+              aria-describedby="parent-login-desc"
             >
               👨 I&apos;m a Parent
             </button>
+            <p id="parent-login-desc" className="sr-only">Login as a parent using username and password</p>
           </div>
         </div>
       </div>
@@ -170,7 +174,8 @@ export default function LoginPage() {
           <div className="text-center mb-8">
             <button
               onClick={() => setLoginMode('choose')}
-              className="mb-4 text-gray-500 hover:text-gray-700"
+              className="mb-4 text-gray-500 hover:text-gray-700 focus:ring-2 focus:ring-primary focus:ring-offset-1 rounded px-2 py-1"
+              aria-label="Go back to login type selection"
             >
               ← Back
             </button>
@@ -185,14 +190,15 @@ export default function LoginPage() {
               <button
                 key={kid.id}
                 onClick={() => handleKidSelection(kid)}
-                className="w-full p-4 bg-white border-2 border-gray-200 rounded-2xl hover:border-primary hover:bg-blue-50 transition-all duration-200 transform hover:scale-105 active:scale-95 touch-manipulation"
+                className="w-full p-4 bg-white border-2 border-gray-200 rounded-2xl hover:border-primary hover:bg-blue-50 transition-all duration-200 transform hover:scale-105 active:scale-95 touch-manipulation focus:ring-4 focus:ring-primary/30 focus:ring-offset-2"
+                aria-label={`Select ${kid.name} profile`}
               >
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white text-xl font-bold">
                     {kid.avatar_url ? (
                       <img 
                         src={kid.avatar_url} 
-                        alt={kid.name}
+                        alt={`${kid.name}'s avatar`}
                         className="w-full h-full rounded-full object-cover"
                       />
                     ) : (
@@ -210,7 +216,7 @@ export default function LoginPage() {
           </div>
           
           {error && (
-            <div className="text-accent-pink text-center mt-4 font-semibold">
+            <div className="text-accent-pink text-center mt-4 font-semibold" role="alert" aria-live="polite">
               {error}
             </div>
           )}
@@ -267,9 +273,11 @@ export default function LoginPage() {
                 inputMode="numeric"
                 value={digit}
                 onChange={(e) => handlePinChange(index, e.target.value)}
-                className="pin-input"
+                className="pin-input focus:ring-4 focus:ring-primary/30 focus:ring-offset-1"
                 maxLength={1}
                 autoFocus={index === 0}
+                aria-label={`PIN digit ${index + 1}`}
+                autoComplete="off"
               />
             ))}
           </div>
@@ -308,24 +316,30 @@ export default function LoginPage() {
         
         <form onSubmit={handleParentLogin} className="space-y-4">
           <div>
+            <label htmlFor="username" className="sr-only">Username</label>
             <input
+              id="username"
               type="text"
               placeholder="Username"
               value={parentCreds.username}
               onChange={(e) => setParentCreds(prev => ({ ...prev, username: e.target.value }))}
-              className="w-full py-3 px-4 border-2 border-gray-300 rounded-xl focus:border-primary focus:outline-none transition-colors"
+              className="w-full py-3 px-4 border-2 border-gray-300 rounded-xl focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/30 focus:ring-offset-1 transition-colors"
               required
+              autoComplete="username"
             />
           </div>
           
           <div>
+            <label htmlFor="password" className="sr-only">Password</label>
             <input
+              id="password"
               type="password"
               placeholder="Password"
               value={parentCreds.password}
               onChange={(e) => setParentCreds(prev => ({ ...prev, password: e.target.value }))}
-              className="w-full py-3 px-4 border-2 border-gray-300 rounded-xl focus:border-primary focus:outline-none transition-colors"
+              className="w-full py-3 px-4 border-2 border-gray-300 rounded-xl focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/30 focus:ring-offset-1 transition-colors"
               required
+              autoComplete="current-password"
             />
           </div>
           
@@ -338,10 +352,12 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="btn-primary w-full"
+            className="btn-primary w-full focus:ring-4 focus:ring-primary/30 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            aria-describedby={loading ? 'login-status' : undefined}
           >
             {loading ? 'Logging in...' : 'Login'}
           </button>
+          {loading && <p id="login-status" className="sr-only">Login in progress</p>}
         </form>
       </div>
     </div>
