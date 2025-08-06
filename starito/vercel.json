@@ -7,6 +7,10 @@
     {
       "path": "/api/reset-weekly-tasks", 
       "schedule": "0 5 * * 0"
+    },
+    {
+      "path": "/api/cron/daily-maintenance",
+      "schedule": "0 6 * * *"
     }
   ]
 }
