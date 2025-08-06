@@ -31,14 +31,17 @@ export class NotificationService {
   
   async showNotification(payload: NotificationPayload): Promise<void> {
     if ('Notification' in window && Notification.permission === 'granted') {
-      new Notification(payload.title, {
+      const options: NotificationOptions = {
         body: payload.body,
         icon: payload.icon || '/icons/icon-192x192.png',
         badge: payload.badge || '/icons/icon-192x192.png',
         tag: payload.tag,
-        requireInteraction: payload.requireInteraction || false,
-        actions: payload.actions
-      })
+        requireInteraction: payload.requireInteraction || false
+      }
+      
+      // Actions are not supported in regular Notification constructor
+      // They are only supported in Service Worker notifications
+      new Notification(payload.title, options)
     }
   }
   

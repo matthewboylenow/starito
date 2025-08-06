@@ -173,7 +173,11 @@ export class VoiceRecorder {
 
   // Static utility methods
   static async isSupported(): Promise<boolean> {
-    return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.MediaRecorder)
+    return !!(
+      navigator.mediaDevices && 
+      typeof navigator.mediaDevices.getUserMedia === 'function' && 
+      typeof window.MediaRecorder !== 'undefined'
+    )
   }
 
   static async getAudioDevices(): Promise<MediaDeviceInfo[]> {
